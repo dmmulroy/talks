@@ -17,7 +17,7 @@
   (with-doc false)
   (with-dev-setup false)
   (post true)
-  (os-version 14.6.1)
+  (os-version 14.4.1)
   (os-family macos)
   (os-distribution macos)
   (os macos)
