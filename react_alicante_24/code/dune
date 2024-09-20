@@ -1,0 +1,12 @@
+
+(dirs :standard \ node_modules)
+
+(data_only_dirs build*)
+
+(melange.emit
+ (target build)
+ (alias melange-app)
+ (libraries app)
+ (promote (until-clean))
+ (module_systems
+  (esm mjs)))

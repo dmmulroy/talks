@@ -1,0 +1,24 @@
+# /nix/store/05726vwmx2kd0f978d32sw6g8mhfxg63-dune-3.16.0/bin/dune build
+# OCAMLPARAM: unset
+# Shared cache: enabled
+# Shared cache location: /Users/dmmulroy/.cache/dune/db
+# Workspace root: /Users/dmmulroy/Code/personal/talks/react_alicante_24/code
+# Auto-detected concurrency: 11
+# Dune context:
+#  { name = "default"
+#  ; kind = lock { default = true }
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/dmmulroy/.cache/dune/toolchains/ocaml-base-compiler.5.2.0-b7b31fccb76b6f62a6d25bcae65f8b3c/target/bin/ocamlc.opt -config > /var/folders/cr/dct1hfxd0sn54r2cjw4wsbxr0000gn/T/dune_dab79f_output
+$ _build/_private/default/.pkg/melange/target/bin/melc --where > /var/folders/cr/dct1hfxd0sn54r2cjw4wsbxr0000gn/T/dune_269352_output
+$ (cd _build/.sandbox/6e6fdd68dd4b0fc9a0c2b837cbac9325/default && .ppx/9aa86304e1964cfc127b38093f18cb83/ppx.exe --cookie 'library-name="app"' -o src/app.pp.ml --impl src/app.ml -corrected-suffix .ppx-corrected -diff-cmd - -dump-ast)
+$ (cd _build/default && ../_private/default/.pkg/melange/target/bin/melc -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -bin-annot-occurrences -I src/.app.objs/melange -I ../_private/default/.pkg/melange/target/lib/melange/dom/melange -I ../_private/default/.pkg/melange/target/lib/melange/js/melange -I ../_private/default/.pkg/melange/target/lib/melange/node/melange -I ../_private/default/.pkg/reason-react/target/lib/reason-react/melange --bs-stop-after-cmj --bs-package-output src --bs-module-name app -no-alias-deps -opaque -o src/.app.objs/melange/app.cmj -c -impl src/app.pp.ml)
+$ (cd _build/default && ../_private/default/.pkg/melange/target/bin/melc -I src/.app.objs/melange -I ../_private/default/.pkg/melange/target/lib/melange/dom/melange -I ../_private/default/.pkg/melange/target/lib/melange/js/melange -I ../_private/default/.pkg/melange/target/lib/melange/node/melange -I ../_private/default/.pkg/reason-react/target/lib/reason-react/melange --bs-module-type es6 -o build/src/app.mjs src/.app.objs/melange/app.cmj)
+# Promoting "_build/default/build/src/app.mjs" to "build/src/app.mjs"
+$ (cd _build/default && ../_private/default/.pkg/melange/target/bin/melc -I .build.mobjs/melange -I ../_private/default/.pkg/melange/target/lib/melange/dom/melange -I ../_private/default/.pkg/melange/target/lib/melange/js/melange -I ../_private/default/.pkg/melange/target/lib/melange/melange -I ../_private/default/.pkg/melange/target/lib/melange/node/melange -I ../_private/default/.pkg/reason-react/target/lib/reason-react/melange -I src/.app.objs/melange --bs-module-type es6 -o build/.build.mobjs/melange.mjs .build.mobjs/melange/melange.cmj)
+# Promoting "_build/default/build/.build.mobjs/melange.mjs" to
+# "build/.build.mobjs/melange.mjs"
