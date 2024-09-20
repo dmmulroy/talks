@@ -1,0 +1,45 @@
+(dirs :standard \ node_modules)
+
+(alias
+ (name all)
+ (deps
+  (alias_rec vite)))
+
+(rule
+ (alias vite)
+ (targets
+  (dir dist))
+ (deps
+  (alias_rec lol)
+  (alias_rec tailwind)
+  ./vite.config.ts
+  ./index.html)
+ (action
+  (system "../../../node_modules/.bin/vite build"))
+ (mode
+  (promote (until-clean))))
+
+(rule
+ (alias tailwind)
+ (deps
+  (:in ./index.css)
+  (:config ./tailwind.config.js)
+  (:index_html ./index.html)
+  (source_tree ./src))
+ (targets styles.css)
+ (action
+  (run npx tailwindcss -c %{config} -i %{in} -o ./styles.css))
+ (mode
+  (promote
+   (until-clean)
+   (into ./public))))
+
+(melange.emit
+ (target output)
+ (alias lol)
+ (libraries reason-react)
+ (preprocess
+  (pps reason-react-ppx melange.ppx))
+ (module_systems
+  (esm mjs))
+ (runtime_deps ./index.css tailwind.config.js postcss.config.js))

@@ -1,0 +1,146 @@
+module Lucide = struct
+  module Globe = struct
+    external make: className:string -> React.element = "Globe"
+    [@@mel.module "lucide-react"] [@@react.component]
+  end
+
+  module Search = struct
+    external make: className:string -> React.element = "Search"
+    [@@mel.module "lucide-react"] [@@react.component]
+  end
+end
+
+type domainStatus = [`available | `taken | `premium]
+
+type tldOption = {
+  tld: string;
+  status: domainStatus;
+  price: float option
+}
+
+type domainResult = {
+  name: string;
+  tld: string;
+  status: domainStatus;
+  price: float option
+}
+
+let[@react.component] make () =
+  let (searchTerm, setSearchTerm) = React.useState(fun () -> "") in
+  let (searchResults, setSearchResults) = React.useState(fun () -> [||]) in
+
+  let tldOptions: tldOption array = [|
+    { tld= ".com"; status= `available; price= Some 10.99 };
+    { tld= ".net"; status= `available; price= Some 9.99 };
+    { tld= ".org"; status= `taken; price= None };
+    { tld= ".io"; status= `premium; price= Some 39.99 };
+    { tld= ".ai"; status= `available; price= Some 69.99 };
+    { tld= ".app"; status= `available; price= Some 12.99 };
+  |]
+  in
+
+  let handleSearch _ev =
+    if searchTerm <> "" then
+      let results: domainResult array = Array.map (fun (option: tldOption) ->
+        let tld = option.tld in
+        {
+          name= {j|$(searchTerm)$(tld)|j};
+          tld= option.tld;
+          status= option.status;
+          price=option.price
+          }
+      ) tldOptions
+      in
+      setSearchResults(fun _ -> results)
+  in
+
+  let getStatusColor (status: domainStatus) =
+    match status with
+    | `available -> "bg-green-500"
+    | `taken -> "bg-red-500"
+    | `premium -> "bg-yellow-500"
+      (* default:
+        return "bg-gray-500" *)
+  in
+
+  <div className="min-h-screen bg-black text-white p-6 flex flex-col items-center justify-center">
+    <div className="w-full max-w-3xl">
+      <div className="p-8">
+        <div className="flex items-center justify-center mb-6">
+          <Lucide.Globe className="h-10 w-10 text-white mr-2" />
+          <h1 className="text-3xl font-bold">(React.string "Domain Finder")</h1>
+        </div>
+
+        <div className="flex space-x-2 mb-8">
+          <Components.Input
+            type_="text"
+            placeholder="Enter your domain name"
+            value=searchTerm
+            onChange=(fun e ->
+              setSearchTerm (fun _ -> (React.Event.Form.target e)##value))
+            className="flex-grow text-lg bg-gray-900 border-gray-700 text-white placeholder-gray-400"
+          />
+          <Components.Button onClick=handleSearch size="lg" className="bg-white text-black hover:bg-gray-200">
+            <Lucide.Search className="mr-2 h-5 w-5" />
+            (React.string "Search")
+          </Components.Button>
+        </div>
+
+        (match searchResults with
+        | [||] -> React.null
+        | searchResults ->
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            (Array.map (fun domain ->
+              let statusColor = getStatusColor domain.status in
+              <Components.Card key=domain.name className="bg-gray-900 border-gray-700">
+                <Components.Card.CardHeader>
+                  <Components.Card.CardTitle className="text-lg text-white">
+                    (React.string domain.name)
+                  </Components.Card.CardTitle>
+                  <Components.Card.CardDescription>
+                    <Components.Badge className={j|$(statusColor) text-black|j}>
+                      (React.string (Obj.magic domain.status))
+                    </Components.Badge>
+                  </Components.Card.CardDescription>
+                </Components.Card.CardHeader>
+                <Components.Card.CardContent>
+                  (match domain.status, domain.price with
+                  | `available, Some price ->
+                    let price = Js.Float.toFixed ~digits:2 price in
+                    <p className="text-2xl font-bold text-green-400">
+                      (React.string (price ^ "/year"))
+                    </p>
+                  | `premium, Some price ->
+                    let price = Js.Float.toFixed ~digits:2 price in
+                    <p className="text-2xl font-bold text-yellow-400">
+                      (React.string(price ^ "/year"))
+                    </p>
+                  | `taken, Some _price ->
+                    <p className="text-lg text-red-400">(React.string "Not available")</p>
+                  | _, None -> React.null
+                    )
+                  </Components.Card.CardContent>
+                <Components.Card.CardFooter>
+                  (match domain.status with
+                  | `available ->
+                    <Components.Button className="w-full bg-white text-black hover:bg-gray-200">
+                      (React.string "Register Now")
+                    </Components.Button>
+                  | `premium ->
+                    <Components.Button className="w-full bg-yellow-500 text-black hover:bg-yellow-600">
+                      (React.string "Make Offer")
+                    </Components.Button>
+                  | `taken ->
+                    <Components.Button variant="outline" className="w-full border-gray-700 text-white hover:bg-gray-800">
+                      (React.string "View Details")
+                    </Components.Button>
+
+                  )
+                  </Components.Card.CardFooter>
+              </Components.Card>)
+            searchResults |> React.array)
+            </div>
+            )
+        </div>
+    </div>
+  </div>

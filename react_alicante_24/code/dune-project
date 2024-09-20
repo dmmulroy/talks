@@ -1,13 +1,20 @@
 (lang dune 3.17)
 
+(using directory-targets 0.1)
+
 (name code)
+
 (generate_opam_files true)
-(source (github dmmulroy/talks))
+
+(source
+ (github dmmulroy/talks))
 
 ;; Use Melange for Javascript Compilation
+
 (using melange 0.1)
 
 ;; Set up mlx files
+
 (dialect
  (name mlx)
  (implementation
@@ -18,14 +25,17 @@
   (preprocess
    (run mlx-pp %{input-file}))))
 
-
 (package
  (name code)
  (allow_empty)
- (depends 
-   ocaml dune melange reason-react
-   ;; `.mlx` support
-   mlx ocamlmerlin-mlx
-   ;; Dev Tools
-   ocamlformat ocaml-lsp-server)
- )
+ (depends
+  ocaml
+  dune
+  melange
+  reason-react
+  ;; `.mlx` support
+  mlx
+  ocamlmerlin-mlx
+  ;; Dev Tools
+  ocamlformat
+  ocaml-lsp-server))

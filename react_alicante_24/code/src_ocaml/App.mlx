@@ -1,0 +1,14 @@
+[%%raw {|import "./index.css"|}]
+
+
+let () =
+  let root =
+    ReactDOM.Client.createRoot (
+      ReactDOM.querySelector("#root") |> Option.get
+    )
+  in
+  ReactDOM.Client.render root (
+    <React.StrictMode>
+      <DomainSearch />
+    </React.StrictMode>
+  )
