@@ -5,8 +5,8 @@
 - The power of an Error - ✅
 - TLD Metadata Sync & TLD Price Cache (maybe subcriber-domains-registrar) - 🟨
 - Domains Search/Buy - 
-- Useful Patterns - 🟨
-- Takeaways & the future -
+- Useful Patterns - ✅
+- Takeaways & the future - ✅
 
 // Meme Recall 
 # The problem with TypeScript
@@ -279,6 +279,8 @@ export const createDualApiFn = <First, Second, A>(
   return dual(2, fn);
 };
 ```
+// TODO: https://x.com/dillon_mulroy/status/1897076497858617568 - show example of how to use
+
 - `withInstrumentation`
 ```typescript
 import { Effect, type Schedule } from 'effect';
@@ -289,6 +291,7 @@ import { Retry } from './retry';
 
 type SpanType = 'web' | 'db' | 'cache' | 'function' | 'custom';
 
+withInstrumentation("span.name", {})
 /**
  * Configuration options for instrumentation.
  *
@@ -900,4 +903,40 @@ export const Logger = {
   flush: () => Effect.succeed(logger.flush()),
 } as const;
 ```
+
+# Case Study | Domains Search/Buy
+- Will built fully on Effect
+  - Additionally will power registrar services, e.g. renewals, transfers, team moves, pricing, further tld management etc 
+- Aiming to be the fastest domain search/buy experience on the web
+  - Fill the gap that google domains left
+
+
+
+# Takeaways & the future 
+## Positive Takeaways
+- Answers to the most common problems we have at Vercel
+  - Standardization
+  - Dependency management
+  - Error Handling
+  - Retries
+  - Consistency
+- Once the foundational primitives are built it's like building with legos and
+you are often faster
+- Easier to maintain and refactor (reference MarkPrompt podcast)
+  - Theory that it may unintuitevly be easier to onboard devs due to guard rails
+- OTEL integration is amazing
+
+
+## Challenges
+- DataDog & Tracing Integration w/ existing code
+- Http w/ Vercel's internal webframework built on Micro
+- "Low Level" Apis & Large Api surface
+  - Often needed to consult the Effect team in Discord
+- AI knowledge of Effect is lacking and solutions like 
+  - API docs + repo exceed most context windows
+
+## Looking to the future
+- Recap Search/Buy (hope to talk w/ Johannes after release)
+- Exploring Effect Cluster for Domain & Cert Renewals
+- Hoping to start internal lunch & learns and advocating more broadly for adoption
 
