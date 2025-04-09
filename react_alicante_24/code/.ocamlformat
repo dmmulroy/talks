@@ -1,4 +1,0 @@
-profile = default
-let-binding-spacing=double-semicolon
-break-infix-before-func=true
-version = 0.26.1
