@@ -5,8 +5,9 @@
 - Agenda
 - The problem with TypeScript
   - Happy path blindness
-  - Throw/Try Catch in the 🗑️: Errors are unknown
+  - Unknown errors by default
   - Example/Rhys joke
+  - It requires discipline to manage, discipline doesn't scale
 - The power of an Error
   - Self-Serve renewals initial state
     - Example of commonplace error messages/user experiences
@@ -15,25 +16,30 @@
     - Wix Engineering example
 - Our responsibility as devs
 - Treating errors as values
-  - React Query & SWR example
-  - Type unsafety w/ React Query & SWR
-- Intro to Result<Ok, Err>
+  - Poll the audience on who uses errors as values
+    - React Query & SWR has already taught us how to do this
+    - It's not enough - Type unsafety w/ React Query & SWR, Business logic/Utils, RSCs, Server + Form Actions, etc
   - Baseline (no try-catch)
-  - Baseline (try/catch)
+  - Baseline (try/catch) - Control flow also doesn't really scale 
   - Promise<Domain | Error>
   - Promise.allSettled (too verbose)
+- Enter Result<Ok, Err>
   - Discriminated union
   - Result<A,E> (aka Monad 🤫)
-  - Maybe show safeTry `neverthrow` api 
+  - Maybe show `safeTry` `neverthrow` api 
   - Link to YT video of implementing Result from scratch
 - The two kinds of Errors
   - Expected errors
+    - We should program against these explicitly. Allow callers to decide how to handle
+    - Carry useful information
+      - Add more context to messages for users (e.g. Wix example)
+      - Add more context and data for tracing, logging, and support (e.g. trace/request ids)
   - Defects (compare to panics?)
+    - Unexpected and "unrecoverable" behaviour will still happen. 
+    - Error Boundaries
+  - Examples of each
 - TaggedError 
   - Fewer foot guns & exhaustiveness checks (Maybe .match?)
 - Error boundaries
 - RSCs, ServerActions, FormActions
 - Summary + Monad Joke
-  
-
-

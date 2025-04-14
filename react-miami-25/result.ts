@@ -99,20 +99,20 @@ class Err<E> {
 	}
 }
 
-interface Result<Success, Failure> {
-	map<NextSuccess>(
-		fn: (value: Success) => NextSuccess,
-	): Result<NextSuccess, Failure>;
-
-	andThen<NextSuccess, NextFailure = Failure>(
-		fn: (value: Success) => Result<NextSuccess, NextFailure>,
-	): Result<NextSuccess, Failure | NextFailure>;
-
-	unwrap(message?: string): Success;
-}
-
-declare const r: _Result<number, number>;
-
-const r2 = r
-	.andThen((num) => num as unknown as _Result<string, boolean>)
-	.map((str) => true);
+//interface Result<Success, Failure> {
+//	map<NextSuccess>(
+//		fn: (value: Success) => NextSuccess,
+//	): Result<NextSuccess, Failure>;
+//
+//	andThen<NextSuccess, NextFailure = Failure>(
+//		fn: (value: Success) => Result<NextSuccess, NextFailure>,
+//	): Result<NextSuccess, Failure | NextFailure>;
+//
+//	unwrap(message?: string): Success;
+//}
+//
+//declare const r: _Result<number, number>;
+//
+//const r2 = r
+//	.andThen((num) => num as unknown as _Result<string, boolean>)
+//	.map((str) => true);
